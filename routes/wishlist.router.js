@@ -20,7 +20,7 @@ router.route('/')
 router.route('/:productId')
 .post(async (req, res) => {
 try{
-  console.log("post req")
+
   const {productId} = req.params;
   const savedProduct = new WishList({_id: productId})
   savedProduct.save();
@@ -35,7 +35,7 @@ try{
     await WishList.findByIdAndDelete(productId);
     res.json({ message: "Deleted" })
   } catch{
-    res.status(404).json({ success: "failed to delete" })
+    res.status(404).json({ success: false, message: "false to delete" })
     }
 })
 

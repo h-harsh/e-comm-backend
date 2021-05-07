@@ -13,7 +13,7 @@ router.route('/')
       });
       res.json(normalizeCartItems);
     } catch (err) {
-      res.status(501).json({ success: false, message: "unable to get cart", errorMessage: err.message })
+      res.status(404).json({ success: false, errorMessage: err.message })
     }
   })
   .post(async (req, res) => {
@@ -24,7 +24,7 @@ router.route('/')
       await newProd.save();
       res.json({ message: "added in cart", newProd })
     } catch (err) {
-      res.status(501).json({ success: false, message: "unable to get cart", errorMessage: err.message })
+      res.status(404).json({ success: false, errorMessage: err.message })
     }
   })
 
@@ -36,7 +36,7 @@ router.route("/:productId")
     await Cart.findByIdAndUpdate(productId, {qty});
     res.json({ qty });
   } catch(err){
-    res.json({errmsg: err.message})
+    res.status(404).json({ success: false, errorMessage: err.message })
   }
 })  
 
@@ -47,7 +47,7 @@ router.route("/:productId")
       res.json({ message: "Deleted" })
     }
     catch(err){
-      res.status(404).json({ success: "Deletion failed" })
+      res.status(404).json({ success: false, errorMessage: err.message })
     }
   })
 
