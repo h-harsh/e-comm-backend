@@ -7,9 +7,9 @@ app.use(express.json())
 app.use(cors())
 
 const user = require("./src/routes/user.route")
-// const products = require("./src/routes/products.router")
-// const cart = require('./src/routes/cart.router.js')
-// const wishlist = require('./src/routes/wishlist.router.js')
+const products = require("./src/routes/products.router")
+const cart = require('./src/routes/cart.route')
+const wishlist = require('./src/routes/wishlist.route')
 
 const { initializeDBConnection } = require("./src/db/db.connect.js")
 
@@ -18,9 +18,9 @@ const PORT = 4000;
 initializeDBConnection();
 
 app.use("/user", user)
-// app.use("/products", products);
-// app.use('/cart', cart)
-// app.use('/wishlist', wishlist )
+app.use("/products", products);
+app.use('/cart', cart)
+app.use('/wishlist', wishlist )
 
 app.get('/', (request, response) => {
   response.json({ hello: "world"})
