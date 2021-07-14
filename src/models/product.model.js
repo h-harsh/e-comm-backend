@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const products = require('./data.js');
+const products = require('../db/data.js');
 
 const ProductSchema = new mongoose.Schema({
   name: String,
