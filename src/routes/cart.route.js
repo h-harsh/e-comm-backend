@@ -14,6 +14,7 @@ router.get('/', authVerify, async(req, res) => {
             model: 'Product'
         } 
     })
+    console.log(userData.cartData)
     const normalizedCartData = userData.cartData.map(item => {return {qty: item.qty, ...item.product._doc}})
     res.json({status: "success", cartData: normalizedCartData})
 })
@@ -49,9 +50,10 @@ router.post('/:productId/inc', authVerify, async(req, res) => {
     const {productId} = req.params
     const userData = await UserData.findOne({userId: userId})
       userData.cartData.map(item => {
+        console.log(item.product)
         if (item.product == productId) {
           UserData.updateOne(
-            { "cartData.product": productId },
+            { "cartData._id": item._id },
             {
               $set: {
                 "cartData.$.qty": item.qty + 1,
@@ -76,7 +78,7 @@ router.post('/:productId/dec', authVerify, async(req, res) => {
       userData.cartData.map(item => {
         if (item.product == productId) {
           UserData.updateOne(
-            { "cartData.product": productId },
+            { "cartData._id": item._id },
             {
               $set: {
                 "cartData.$.qty": item.qty - 1,

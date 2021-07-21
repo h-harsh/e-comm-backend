@@ -13,7 +13,7 @@ const wishlist = require('./src/routes/wishlist.route')
 
 const { initializeDBConnection } = require("./src/db/db.connect.js")
 
-const PORT = 4000;
+const PORT = 5000;
 
 initializeDBConnection();
 

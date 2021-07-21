@@ -15,6 +15,7 @@ router
   .post(async (req, res) => {
     try {
       const user = req.body;
+      console.log(req.body)
       bcrypt.hash(user.password, saltRounds, async function (err, hash) {
         const NewUser = new User({ ...user, password: hash });
         await NewUser.save();
@@ -38,8 +39,8 @@ router.post("/login", async (req, res) => {
     const { userName, password } = req.body;
     const user = await User.findOne({ userName: userName });
     console.log(userName, password, req.body);
-
     bcrypt.compare(password, user.password, function (err, result) {
+      console.log(err, result)
         if (result) {
           const token = jwt.sign({ userId: user._id }, secret, {
             expiresIn: "24h",
