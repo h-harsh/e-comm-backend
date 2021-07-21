@@ -36,6 +36,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ success: false, message: "error occured, see the errMessage key for more details", errorMessage: err.message})
 })
 
-app.listen(prcess.env.PORT || PORT, () => {
+app.listen(process.env.PORT || PORT, () => {
   console.log('server started on port: ', PORT);
 });
