@@ -7,8 +7,8 @@ faker.seed(123);
   price: faker.commerce.price(),
   material: faker.commerce.productMaterial(),
   brand: faker.lorem.word(),
-  inStock: faker.random.boolean(),
-  fastDelivery: faker.random.boolean(),
+  inStock: faker.datatype.boolean(),
+  fastDelivery: faker.datatype.boolean(),
   ratings: faker.random.arrayElement([1, 2, 3, 4, 5]),
   offer: faker.random.arrayElement([
     "Save 50",

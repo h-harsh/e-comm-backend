@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const {User} = require('../models/user.model')
 const {UserData} = require('../models/userData.model')
+const {Address} = require('../models/address.model');
+const {Orders} = require('../models/orders.model');
 
 const saltRounds = 10;
 const secret =
@@ -19,7 +21,13 @@ router
       bcrypt.hash(user.password, saltRounds, async function (err, hash) {
         const NewUser = new User({ ...user, password: hash });
         await NewUser.save();
-        const NewUserData = new UserData({ userId: NewUser._id });
+
+        const NewAddress = new Address();
+        await NewAddress.save()
+        const NewOrders = new Orders();
+        await NewOrders.save()
+
+        const NewUserData = new UserData({ userId: NewUser._id, address:NewAddress._id, order:NewOrders._id });
         await NewUserData.save();
         return res.json({
           status: "Signup successful",

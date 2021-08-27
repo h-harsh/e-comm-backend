@@ -10,6 +10,8 @@ const user = require("./src/routes/user.route")
 const products = require("./src/routes/products.router")
 const cart = require('./src/routes/cart.route')
 const wishlist = require('./src/routes/wishlist.route')
+const address = require('./src/routes/address.route')
+const order = require('./src/routes/order.route')
 
 const { initializeDBConnection } = require("./src/db/db.connect.js")
 
@@ -21,9 +23,11 @@ app.use("/user", user)
 app.use("/products", products);
 app.use('/cart', cart)
 app.use('/wishlist', wishlist )
+app.use('/address', address)
+app.use('/order', order)
 
 app.get('/', (request, response) => {
-  response.json({ hello: "world"})
+  response.json("Welcome to the Fin-store API")
 });
 
 
