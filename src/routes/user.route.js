@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const {User} = require('../models/user.model')
-const {UserData} = require('../models/userData.model')
-const {Address} = require('../models/address.model');
-const {Orders} = require('../models/orders.model');
+const { User } = require("../models/user.model");
+const { UserData } = require("../models/userData.model");
+const { Address } = require("../models/address.model");
+const { Orders } = require("../models/orders.model");
 
 const saltRounds = 10;
 const secret =
@@ -17,17 +17,21 @@ router
   .post(async (req, res) => {
     try {
       const user = req.body;
-      console.log(req.body)
+      console.log(req.body);
       bcrypt.hash(user.password, saltRounds, async function (err, hash) {
         const NewUser = new User({ ...user, password: hash });
         await NewUser.save();
 
         const NewAddress = new Address();
-        await NewAddress.save()
-        const NewOrders = new Orders();
-        await NewOrders.save()
+        await NewAddress.save();
+        // const NewOrders = new Orders();
+        // await NewOrders.save()
 
-        const NewUserData = new UserData({ userId: NewUser._id, address:NewAddress._id, order:NewOrders._id });
+        const NewUserData = new UserData({
+          userId: NewUser._id,
+          address: NewAddress._id,
+          // order: NewOrders._id,
+        });
         await NewUserData.save();
         return res.json({
           status: "Signup successful",
@@ -48,20 +52,19 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ userName: userName });
     console.log(userName, password, req.body);
     bcrypt.compare(password, user.password, function (err, result) {
-      console.log(err, result)
-        if (result) {
-          const token = jwt.sign({ userId: user._id }, secret, {
-            expiresIn: "24h",
-          });
-           res.json({
-            status: "login success",
-            userId: user._id,
-            token: token,
-          });
-        } else {
-          res.json({ status: "Your password is wrong", errorMessage: err });
-        }
-      
+      console.log(err, result);
+      if (result) {
+        const token = jwt.sign({ userId: user._id }, secret, {
+          expiresIn: "24h",
+        });
+        res.json({
+          status: "login success",
+          userId: user._id,
+          token: token,
+        });
+      } else {
+        res.json({ status: "Your password is wrong", errorMessage: err });
+      }
     });
   } catch (error) {
     res.json({ status: "User not found", errorMessage: error.message });

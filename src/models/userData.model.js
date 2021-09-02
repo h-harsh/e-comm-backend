@@ -13,7 +13,8 @@ const UserDataSchema = mongoose.Schema({
   ],
   wishlistData: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
   address: { type: mongoose.Schema.Types.ObjectId, ref: "Address" },
-  order: { type: mongoose.Schema.Types.ObjectId, ref: "Orders" },
+  orders: [{ type: mongoose.Schema.Types.ObjectId, ref: "Orders" }],
+  
 });
 
 const UserData = mongoose.model("UserData", UserDataSchema);
