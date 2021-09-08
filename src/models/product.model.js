@@ -1,30 +1,37 @@
 const mongoose = require("mongoose");
-const products = require('../db/data.js');
+const data = require("../db/productsData");
 
-const ProductSchema = new mongoose.Schema({
-  name: String,
-  image: String,
-  price: Number,
-  material: String,
-  brand: String,
-  inStock: Boolean,
-  fastDelivery: Boolean,
-  ratings: String,
-  offer:String,
-  idealFor: String,
-  color:String 
-   },
-   { timestamps: true }
-   );
-
+const ProductSchema = new mongoose.Schema(
+  {
+    name: String,
+    image: String,
+    author: String,
+    publisher: String,
+    publishYear: String,
+    price: Number,
+    discount: Number,
+    deliveryCharge: Number,
+    inStock: Boolean,
+    fastDelivery: Boolean,
+    ratings: String,
+    offer: String,
+    description: String,
+    format: String,
+    asins: String,
+    language: String,
+    pages: Number,
+    weight: Number,
+    bestSellersRank: String,
+  },
+  { timestamps: true }
+);
 
 const Product = mongoose.model("Product", ProductSchema);
 
-// for(let i=0; i< 50; i++){
-//   const newProd = new Product(products[i])
-// const savedProd = newProd.save()
-// console.log(savedProd)
+// for (let i = 0; i < 11; i++) {
+//   const newProd = new Product(data[i]);
+//   const savedProd = newProd.save();
+//   console.log(savedProd);
 // }
 
-
-module.exports = { Product }
+module.exports = { Product };
